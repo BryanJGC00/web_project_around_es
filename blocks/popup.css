@@ -26,6 +26,12 @@
   margin-top: 48px;
 }
 
+.popup__button:disabled {
+  background-color: gray; /* Color inactivo, ajusta al diseño */
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .popup__button:hover {
   background: rgba(0, 0, 0, 0.8);
   cursor: pointer;
@@ -47,6 +53,21 @@
 
 .popup__close:hover {
   opacity: 0.6;
+}
+
+.popup__input:invalid {
+  border-bottom: 1px solid red; /* Borde rojo si inválido */
+}
+
+.popup__error {
+  color: red;
+  font-size: 12px;
+  display: none; /* Oculto por default */
+  margin-top: 5px;
+}
+
+.popup__error_visible {
+  display: block; /* Mostrar cuando haya error */
 }
 
 .popup__content {
