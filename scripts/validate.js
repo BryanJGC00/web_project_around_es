@@ -1,7 +1,7 @@
 // Muestra error
 function showInputError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.add("popup__input_invalid"); // Agrega clase para borde rojo (define en CSS si no usas :invalid)
+  inputElement.classList.add("popup__input_invalid");
   errorElement.textContent = errorMessage;
   errorElement.classList.add("popup__error_visible");
 }
@@ -14,10 +14,21 @@ function hideInputError(formElement, inputElement) {
   errorElement.textContent = "";
 }
 
-// Chequea valididad de input
+// Chequea valididad de input con mensajes personalizados
 function checkInputValidity(formElement, inputElement) {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage); // Mensaje default
+  let errorMessage = "";
+  if (inputElement.validity.valueMissing) {
+    errorMessage = "Este campo es obligatorio.";
+  } else if (inputElement.validity.typeMismatch) {
+    errorMessage = "Por favor, introduce una dirección web válida.";
+  } else if (inputElement.validity.tooShort) {
+    errorMessage = `El texto debe tener al menos ${inputElement.minLength} caracteres; actualmente tiene ${inputElement.value.length}.`;
+  } else if (!inputElement.validity.valid) {
+    errorMessage = inputElement.validationMessage; // Fallback al default si hay otros errores
+  }
+
+  if (errorMessage) {
+    showInputError(formElement, inputElement, errorMessage);
   } else {
     hideInputError(formElement, inputElement);
   }
