@@ -16,20 +16,27 @@
   height: 50px;
   font-size: 18px;
   line-height: 22px;
-  color: white;
+  color: #ccc; /* Gris claro para texto inactivo */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background-color: white;
   border-radius: 2px;
-  border: none;
+  border: 1px solid #ccc; /* Borde gris claro para inactivo */
   margin-top: 48px;
+  cursor: pointer;
 }
 
 .popup__button:disabled {
-  background-color: gray; /* Color inactivo, ajusta al diseño */
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
+}
+
+.popup__button:enabled {
+  /* Negro activo cuando enabled */
+  background-color: black;
+  color: white;
+  border: none;
 }
 
 .popup__button:hover {
@@ -55,15 +62,24 @@
   opacity: 0.6;
 }
 
+.popup__input {
+  border: none; /* Borde default none o transparente */
+  border-bottom: 1px solid #ccc; /* Línea gris default */
+  padding-bottom: 10px; /* Espacio para error */
+}
+
 .popup__input:invalid {
   border-bottom: 1px solid red; /* Borde rojo si inválido */
 }
 
 .popup__error {
+  /* Texto error rojo, oculto por default */
   color: red;
   font-size: 12px;
-  display: none; /* Oculto por default */
+  line-height: 15px;
+  display: none;
   margin-top: 5px;
+  min-height: 15px; /* Reserva espacio para no mover layout */
 }
 
 .popup__error_visible {

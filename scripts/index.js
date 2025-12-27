@@ -159,6 +159,66 @@ function handleNewCardSubmit(evt) {
   closeModal(newCardModal);
 }
 
+// Muestra error
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.add("popup__input_invalid"); // Agrega clase para borde rojo (define en CSS si no usas :invalid)
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("popup__error_visible");
+}
+
+// Oculta error
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.remove("popup__input_invalid");
+  errorElement.classList.remove("popup__error_visible");
+  errorElement.textContent = "";
+}
+
+// Chequea valididad de input
+function checkInputValidity(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage); // Mensaje default
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+// Toggle button basado en valididad de todos inputs
+function toggleButtonState(inputList, buttonElement) {
+  const isInvalid = inputList.some((input) => !input.validity.valid);
+  buttonElement.disabled = isInvalid;
+}
+
+// Habilita validación para todos forms
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll(".popup__form"));
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
+}
+
+// Para edit
+function handleOpenEditModal() {
+  fillProfileForm();
+  const form = profileForm;
+  Array.from(form.querySelectorAll(".popup__input")).forEach(
+    hideInputError.bind(null, form)
+  ); // Oculta errores
+  form.querySelector(".popup__button").disabled = true; // Disable inicial
+  openModal(profileModal);
+}
+
+// Para new card (en addButton listener)
+addButton.addEventListener("click", () => {
+  const form = newCardForm;
+  Array.from(form.querySelectorAll(".popup__input")).forEach(
+    hideInputError.bind(null, form)
+  );
+  form.querySelector(".popup__button").disabled = true;
+  openModal(newCardModal);
+});
+
 profileEditButton.addEventListener("click", handleOpenEditModal);
 modalCloseButton.addEventListener("click", () => closeModal(profileModal));
 profileForm.addEventListener("submit", handleProfileFormSubmit);
@@ -181,3 +241,5 @@ document.addEventListener("click", (evt) => {
     closeModal(evt.target);
   }
 });
+
+enableValidation();
