@@ -1,3 +1,4 @@
+import { initialCards, openModal, closeModal } from "./utils.js";
 const initialCards = [
   {
     name: "Valle de Yosemite",
