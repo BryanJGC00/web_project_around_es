@@ -1,4 +1,5 @@
-import { initialCards, openModal, closeModal } from "./utils.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -26,14 +27,11 @@ const initialCards = [
   },
 ];
 
-// Selecciona la lista donde se agregarán las tarjetas
 const cardsList = document.querySelector(".cards__list");
-// Selecciona el contenido del template
 const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector(".card");
 
-// Función para crear una tarjeta
 function createCard(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
@@ -66,54 +64,46 @@ function createCard(cardData) {
   return cardElement;
 }
 
-// Función para renderizar una tarjeta en la lista
 function renderCard(cardElement) {
   cardsList.prepend(cardElement);
 }
 
-// Renderiza tarjetas iniciales
 initialCards.forEach((cardData) => {
   const cardElement = createCard(cardData);
   renderCard(cardElement);
 });
 
-// Selectores para popup de edición
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileModal = document.querySelector("#edit-popup");
 const modalCloseButton = profileModal.querySelector(".popup__close");
 const profileForm = profileModal.querySelector(".popup__form");
 const nameInput = profileForm
   ? profileForm.querySelector(".popup__input_type_name")
-  : null; // Check for null
+  : null;
 const descriptionInput = profileForm
   ? profileForm.querySelector(".popup__input_type_description")
-  : null; // Check for null
+  : null;
 
-// Selectores para popup de nueva tarjeta
 const addButton = document.querySelector(".profile__add-button");
 const newCardModal = document.querySelector("#add-popup");
 const newCardCloseButton = newCardModal.querySelector(".popup__close");
 const newCardForm = newCardModal.querySelector(".popup__form");
 
-// Selectores para popup de imagen
 const imageModal = document.querySelector("#image-popup");
 const imageCloseButton = imageModal.querySelector(".popup__close");
 
-// Función para abrir modal
 function openModal(modal) {
   if (modal) {
     modal.classList.add("popup_is-opened");
   }
 }
 
-// Función para cerrar modal
 function closeModal(modal) {
   if (modal) {
     modal.classList.remove("popup_is-opened");
   }
 }
 
-// Función para precargar formulario de edición (con checks para null)
 function fillProfileForm() {
   const profileTitle = document.querySelector(".profile__title");
   const profileDescription = document.querySelector(".profile__description");
@@ -133,7 +123,6 @@ function fillProfileForm() {
   }
 }
 
-// Función para manejar submit de edición de perfil
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const profileTitle = document.querySelector(".profile__title");
@@ -148,7 +137,6 @@ function handleProfileFormSubmit(evt) {
   closeModal(profileModal);
 }
 
-// Función para manejar submit de nueva tarjeta
 function handleNewCardSubmit(evt) {
   evt.preventDefault();
   const name = newCardForm.querySelector(".popup__input_type_card-name").value;
@@ -159,7 +147,6 @@ function handleNewCardSubmit(evt) {
   closeModal(newCardModal);
 }
 
-// Función para abrir popup de edición
 function handleOpenEditModal() {
   console.log("Botón de edición clickeado - depuración");
   fillProfileForm();
@@ -167,14 +154,13 @@ function handleOpenEditModal() {
   if (form) {
     Array.from(form.querySelectorAll(".popup__input")).forEach(
       hideInputError.bind(null, form)
-    ); // Oculta errores
+    );
     const button = form.querySelector(".popup__button");
-    if (button) button.disabled = false; // Habilitar si es válido
+    if (button) button.disabled = false;
   }
   openModal(profileModal);
 }
 
-// Event listeners
 profileEditButton.addEventListener("click", handleOpenEditModal);
 modalCloseButton.addEventListener("click", () => closeModal(profileModal));
 profileForm.addEventListener("submit", handleProfileFormSubmit);
@@ -206,10 +192,8 @@ document.addEventListener("click", (evt) => {
   }
 });
 
-// Habilita validación (de validate.js)
 enableValidation();
 
-// Recorre el array initialCards y registra los nombres en la consola (según la guía del proyecto)
 initialCards.forEach((card) => {
   console.log(card.name);
 });
