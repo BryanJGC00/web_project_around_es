@@ -1,159 +1,160 @@
 .popup {
   font-family: "Inter", Arial, sans-serif;
-  align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  width: 100vw;
+  height: 100vh;
   display: none;
-}
-
-.popup__button {
-  width: 100%;
-  height: 50px;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ccc; /* Gris claro para texto inactivo */
-  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  border-radius: 2px;
-  border: 1px solid #ccc; /* Borde gris claro para inactivo */
-  margin-top: 48px;
-  cursor: pointer;
+  z-index: 1000;
+  pointer-events: none;
 }
 
-.popup__button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+.popup_is-opened {
+  display: flex;
+  pointer-events: auto;
 }
 
-.popup__button:enabled {
-  /* Negro activo cuando enabled */
-  background-color: black;
-  color: white;
-  border: none;
-}
-
-.popup__button:hover {
-  background: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
+.popup__content {
+  background: #ffffff;
+  padding: 34px 36px 37px;
+  border-radius: 10px; /* Bordes redondeados como Figma */
+  max-width: 430px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+  border: none; /* Sin bordes extras para contorno limpio */
 }
 
 .popup__close {
-  width: 35px;
-  height: 35px;
   background: transparent url("../images/close.svg") center no-repeat;
-  background-size: 35px 35px;
+  background-size: contain;
   border: none;
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
   position: absolute;
-  top: -39px;
-  right: -37px;
+  top: -40px;
+  right: -40px;
   padding: 0;
   margin: 0;
-  cursor: pointer;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .popup__close:hover {
   opacity: 0.6;
 }
 
-.popup__input {
-  border: none; /* Borde default none o transparente */
-  border-bottom: 1px solid #ccc; /* Línea gris default */
-  padding-bottom: 10px; /* Espacio para error */
-}
-
-.popup__input:invalid {
-  border-bottom: 1px solid red; /* Borde rojo si inválido */
-}
-
-.popup__error {
-  /* Texto error rojo, oculto por default */
-  color: red;
-  font-size: 12px;
-  line-height: 15px;
-  display: none;
-  margin-top: 5px;
-  min-height: 15px; /* Reserva espacio para no mover layout */
-}
-
-.popup__error_visible {
-  display: block; /* Mostrar cuando haya error */
-}
-
-.popup__content {
-  max-width: 430px;
-  width: 100%;
-  min-height: 323px;
-  background-color: #fff;
-  border-radius: 10px;
-  position: relative;
-  box-sizing: border-box;
-  padding: 34px 36px;
+.popup__title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29px;
+  margin: 0 0 54px;
 }
 
 .popup__form {
-  margin-top: 27px;
+  display: flex;
+  flex-direction: column;
 }
 
 .popup__input {
-  width: 100%;
-  height: 47px;
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-family: "Inter", Arial, sans-serif;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 1.2;
+  padding: 18px 0 4px 0;
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 100%;
+  background: transparent;
   box-sizing: border-box;
-  padding: 10px 0 0;
-  margin-bottom: 10px;
+  vertical-align: bottom;
+  display: block;
+  appearance: none;
+  margin-bottom: 30px;
+  transition: border-bottom 0.3s ease; /* Transición suave para pulir cambios */
+  outline: none; /* Elimina outline browser para contorno limpio */
+}
+
+.popup__input:focus {
+  border-bottom: 2px solid #000; /* Feedback visual en focus (accesible) */
+}
+
+.popup__input.popup__input_invalid {
+  border-bottom: 1px solid #ff0000;
 }
 
 .popup__input:last-of-type {
   margin-bottom: 0;
 }
 
-.popup__title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 30px;
+.popup__button {
+  background: #000000;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  border-radius: 2px; /* Bordes redondeados como Figma */
+  cursor: pointer;
+  height: 50px;
+  margin-top: 48px;
+  transition: opacity 0.3s ease, background-color 0.3s ease; /* Suave para pulir */
+  outline: none; /* Sin outline en focus */
 }
 
-.popup_is-opened {
-  display: flex;
+.popup__button:hover {
+  opacity: 0.8;
+}
+
+.popup__button_disabled {
+  background-color: #e5e5e5;
+  color: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+  border: 1px solid rgba(0, 0, 0, 0.2); /* Borde sutil gris para definición */
+  opacity: 1;
+}
+
+.popup__error {
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  margin-top: 5px;
+  display: none;
+}
+
+.popup__error_visible {
+  display: block;
 }
 
 .popup__content_content_image {
-  max-width: 75vw;
-  max-height: 75vh;
-  height: auto;
-  width: auto;
-  display: flex;
   background: transparent;
-  border-radius: 0;
+  box-shadow: none;
   padding: 0;
+  max-width: 75vw;
+  position: relative;
+  border-radius: 10px; /* Asegura bordes redondeados en imagen popup */
 }
 
 .popup__image {
   max-width: 100%;
-  object-fit: cover;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 10px; /* Pulido: Bordes redondeados en imagen */
 }
 
 .popup__caption {
   font-size: 12px;
   line-height: 15px;
-  color: #fff;
-  position: absolute;
-  left: 0;
-  top: calc(100% + 10px);
-  margin: 0;
+  color: #ffffff;
+  margin-top: 10px;
 }
 
+/* Responsivo */
 @media screen and (max-width: 544px) {
   .popup {
     bottom: 112px;
@@ -167,10 +168,14 @@
   }
 
   .popup__close {
-    right: 7px;
-    top: -30px;
+    right: 0;
+    top: -36px;
     width: 20px;
     height: 20px;
+  }
+
+  .popup__close::before {
+    font-size: 20px;
   }
 
   .popup__content {
@@ -187,6 +192,11 @@
   .popup__title {
     font-size: 18px;
     line-height: 22px;
+  }
+
+  .popup__input {
+    padding: 16px 0 3px 0;
+    font-size: 13px;
   }
 
   .popup__content_content_image {

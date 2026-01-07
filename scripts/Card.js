@@ -1,10 +1,10 @@
-// Card.js
+// Card.js (reemplaza completo)
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._text = data.name;
     this._imageLink = data.link;
     this._templateSelector = templateSelector;
-    this._handleCardClick = handleCardClick; // Función para abrir popup de imagen
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -23,10 +23,10 @@ export default class Card {
     this._deleteButton = this._element.querySelector(".card__delete-button");
 
     this._cardImage.src = this._imageLink;
-    this._cardImage.alt = `Imagen de ${this._text}`; // Accesibilidad: alt descriptivo
+    this._cardImage.alt = `Imagen de ${this._text}`;
     this._cardTitle.textContent = this._text;
 
-    this._setEventListeners(); // Método privado para eventos
+    this._setEventListeners();
 
     return this._element;
   }
@@ -40,7 +40,7 @@ export default class Card {
   }
 
   _handleLike() {
-    this._likeButton.classList.toggle("card__like-button_active");
+    this._likeButton.classList.toggle("card__like-button_is-active");
   }
 
   _handleDelete() {

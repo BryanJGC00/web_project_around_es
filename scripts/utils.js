@@ -35,11 +35,15 @@ export const validationConfig = {
 };
 
 export function openModal(modal) {
+  console.log("openModal called for:", modal.id);
+  console.trace("openModal trace"); // Muestra stack para debug
   modal.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleEscClose);
 }
 
 export function closeModal(modal) {
+  console.log("closeModal called for:", modal.id);
+  console.trace("closeModal trace");
   modal.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", handleEscClose);
 }

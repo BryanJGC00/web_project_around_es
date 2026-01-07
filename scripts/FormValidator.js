@@ -18,6 +18,7 @@ export default class FormValidator {
   enableValidation() {
     this._formElement.addEventListener("submit", (evt) => evt.preventDefault());
     this._setEventListeners();
+    this._toggleButtonState(); // Nueva línea: Valida inicialmente
   }
 
   _setEventListeners() {
@@ -39,20 +40,30 @@ export default class FormValidator {
 
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(
-      `.${inputElement.id}-error`
+      `#${inputElement.id}-error` // Cambiado . a #
     );
-    inputElement.classList.add(this._inputErrorClass);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(this._errorClass);
+    if (errorElement) {
+      // Agregado para robustez
+      inputElement.classList.add(this._inputErrorClass);
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add(this._errorClass);
+    } else {
+      console.warn(`Error element not found for input: ${inputElement.id}`);
+    }
   }
 
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(
-      `.${inputElement.id}-error`
+      `#${inputElement.id}-error` // Cambiado . a #
     );
-    inputElement.classList.remove(this._inputErrorClass);
-    errorElement.classList.remove(this._errorClass);
-    errorElement.textContent = "";
+    if (errorElement) {
+      // Agregado para robustez
+      inputElement.classList.remove(this._inputErrorClass);
+      errorElement.classList.remove(this._errorClass);
+      errorElement.textContent = "";
+    } else {
+      console.warn(`Error element not found for input: ${inputElement.id}`);
+    }
   }
 
   _toggleButtonState() {
@@ -67,5 +78,12 @@ export default class FormValidator {
 
   _hasInvalidInput() {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
+  }
+
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement); // Oculta errores previos
+    });
+    this._toggleButtonState(); // Evalúa estado inicial (vacío = disabled)
   }
 }
