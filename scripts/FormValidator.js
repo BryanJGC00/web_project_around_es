@@ -18,7 +18,9 @@ export default class FormValidator {
   enableValidation() {
     this._formElement.addEventListener("submit", (evt) => evt.preventDefault());
     this._setEventListeners();
-    this._toggleButtonState(); // Nueva línea: Valida inicialmente
+    this._toggleButtonState(); // Valida estado inicial del botón
+    // Importante: Valida todos los campos al cargar (sin '¡')
+    this._inputList.forEach((input) => this._checkInputValidity(input));
   }
 
   _setEventListeners() {
@@ -32,37 +34,45 @@ export default class FormValidator {
 
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, inputElement.validationMessage);
+      this._showInputError(inputElement);
     } else {
       this._hideInputError(inputElement);
     }
   }
 
-  _showInputError(inputElement, errorMessage) {
+  _showInputError(inputElement) {
     const errorElement = this._formElement.querySelector(
-      `#${inputElement.id}-error` // Cambiado . a #
+      `#${inputElement.id}-error`
     );
-    if (errorElement) {
-      // Agregado para robustez
-      inputElement.classList.add(this._inputErrorClass);
-      errorElement.textContent = errorMessage;
-      errorElement.classList.add(this._errorClass);
-    } else {
-      console.warn(`Error element not found for input: ${inputElement.id}`);
+    let errorMessage = inputElement.validationMessage; // Mensaje por defecto del navegador
+
+    // Mensajes custom en español según el error
+    if (inputElement.validity.valueMissing) {
+      errorMessage = "Por favor, rellena este campo";
+    } else if (
+      inputElement.validity.typeMismatch &&
+      inputElement.type === "url"
+    ) {
+      errorMessage = "Por favor, introduce una dirección web válida";
+    } else if (inputElement.validity.tooShort) {
+      errorMessage = `El campo debe tener al menos ${inputElement.minLength} caracteres`;
+    } else if (inputElement.validity.tooLong) {
+      errorMessage = `El campo debe tener máximo ${inputElement.maxLength} caracteres`;
     }
+
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(this._errorClass);
+    inputElement.classList.add(this._inputErrorClass);
   }
 
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(
-      `#${inputElement.id}-error` // Cambiado . a #
+      `#${inputElement.id}-error`
     );
     if (errorElement) {
-      // Agregado para robustez
-      inputElement.classList.remove(this._inputErrorClass);
-      errorElement.classList.remove(this._errorClass);
       errorElement.textContent = "";
-    } else {
-      console.warn(`Error element not found for input: ${inputElement.id}`);
+      errorElement.classList.remove(this._errorClass);
+      inputElement.classList.remove(this._inputErrorClass);
     }
   }
 
@@ -82,8 +92,9 @@ export default class FormValidator {
 
   resetValidation() {
     this._inputList.forEach((inputElement) => {
-      this._hideInputError(inputElement); // Oculta errores previos
+      this._hideInputError(inputElement);
+      inputElement.value = ""; // Limpia los valores (opcional, pero buena práctica para UX)
     });
-    this._toggleButtonState(); // Evalúa estado inicial (vacío = disabled)
+    this._toggleButtonState(); // Desactiva botón al reset
   }
 }

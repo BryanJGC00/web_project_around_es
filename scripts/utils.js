@@ -34,23 +34,32 @@ export const validationConfig = {
   errorClass: "popup__error_visible",
 };
 
-export function openModal(modal) {
-  console.log("openModal called for:", modal.id);
-  console.trace("openModal trace"); // Muestra stack para debug
+let currentOpenModal = null;
+
+function openModal(modal) {
   modal.classList.add("popup_is-opened");
+  currentOpenModal = modal;
   document.addEventListener("keydown", handleEscClose);
+  document.addEventListener("mousedown", handleOverlayClick);
 }
 
-export function closeModal(modal) {
-  console.log("closeModal called for:", modal.id);
-  console.trace("closeModal trace");
+function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
+  currentOpenModal = null;
   document.removeEventListener("keydown", handleEscClose);
+  document.removeEventListener("mousedown", handleOverlayClick);
 }
 
 function handleEscClose(evt) {
-  if (evt.key === "Escape") {
-    const openedModal = document.querySelector(".popup_is-opened");
-    closeModal(openedModal);
+  if (evt.key === "Escape" && currentOpenModal) {
+    closeModal(currentOpenModal);
   }
 }
+
+function handleOverlayClick(evt) {
+  if (evt.target.classList.contains("popup")) {
+    closeModal(evt.target);
+  }
+}
+
+export { openModal, closeModal };

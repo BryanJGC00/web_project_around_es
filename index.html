@@ -1,157 +1,140 @@
-<DOCUMENT filename="index.html">
-  <!DOCTYPE html>
-  <html lang="es">
-    <head>
-      <meta charset="UTF-8" />
-      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-      <meta content="ie=edge" http-equiv="X-UA-Compatible" />
-      <title>Around The U.S.</title>
-      <link href="./pages/index.css" rel="stylesheet" />
-    </head>
-    <body class="page">
-      <div class="page__content">
-        <header class="header page__section">
-          <img
-            alt="Logotipo Around The U.S."
-            class="logo header__logo"
-            src="./images/logo.svg"
-          />
-        </header>
-        <main class="content">
-          <section class="profile page__section">
-            <img
-              class="profile__image"
-              src="./images/avatar.jpg"
-              alt="Avatar"
-            />
-            <div class="profile__info">
-              <h1 class="profile__title">Jacques Cousteau</h1>
-              <button
-                aria-label="Editar perfil"
-                class="profile__edit-button"
-                type="button"
-              ></button>
-              <p class="profile__description">Explorador</p>
-            </div>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <title>Around The U.S.</title>
+    <link href="./pages/index.css" rel="stylesheet" />
+  </head>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img
+          alt="Logotipo Around The U.S."
+          class="logo header__logo"
+          src="./images/logo.svg"
+        />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__info">
+            <h1 class="profile__title">Jacques Cousteau</h1>
             <button
-              aria-label="Agregar tarjeta"
-              class="profile__add-button"
+              class="profile__edit-button"
               type="button"
+              aria-label="Editar perfil"
             ></button>
-          </section>
-          <section class="cards page__section">
-            <ul class="cards__list"></ul>
-          </section>
-        </main>
-        <footer class="footer page__section">
-          <p class="footer__copyright">&copy; 2020 Around The U.S.</p>
-        </footer>
-        <!-- Popup para editar perfil -->
-        <div class="popup" id="edit-popup">
-          <div class="popup__content">
-            <button
-              aria-label="Cerrar ventana emergente"
-              class="popup__close"
-              type="button"
-            ></button>
-            <h3 class="popup__title">Editar perfil</h3>
-            <form class="popup__form" name="edit-profile">
-              <input
-                class="popup__input popup__input_type_name"
-                id="name"
-                maxlength="40"
-                minlength="2"
-                name="name"
-                placeholder="Nombre"
-                required
-                type="text"
-              />
-              <span class="popup__error" id="name-error"></span>
-              <input
-                class="popup__input popup__input_type_link-url"
-                id="description"
-                maxlength="200"
-                minlength="2"
-                name="description"
-                placeholder="Acerca de mí"
-                required
-                type="text"
-              />
-              <span class="popup__error" id="description-error"></span>
-              <button class="button popup__button" type="submit">
-                Guardar
-              </button>
-            </form>
+            <p class="profile__description">Explorador</p>
           </div>
-        </div>
-        <!-- Popup para agregar una tarjeta -->
-        <div class="popup" id="new-card-popup">
-          <div class="popup__content">
-            <button
-              aria-label="Cerrar ventana emergente"
-              class="popup__close"
-              type="button"
-            ></button>
-            <h3 class="popup__title">Nuevo lugar</h3>
-            <form class="popup__form" name="new-place">
-              <input
-                class="popup__input popup__input_type_name"
-                id="place-name"
-                maxlength="30"
-                minlength="2"
-                name="name"
-                placeholder="Título"
-                required
-                type="text"
-              />
-              <span class="popup__error" id="place-name-error"></span>
-              <input
-                class="popup__input popup__input_type_link-url"
-                id="link"
-                name="link"
-                placeholder="Enlace a la imagen"
-                required
-                type="url"
-              />
-              <span class="popup__error" id="link-error"></span>
-              <button class="button popup__button" type="submit">
-                Guardar
-              </button>
-            </form>
-          </div>
-        </div>
-        <!-- Popup para imagen ampliada -->
-        <div class="popup" id="image-popup">
-          <div class="popup__content popup__content_content_image">
-            <button
-              aria-label="Cerrar ventana emergente"
-              class="popup__close"
-              type="button"
-            ></button>
-            <img alt="" class="popup__image" src="#" />
-            <p class="popup__caption"></p>
-          </div>
-        </div>
-      </div>
-      <template id="card-template">
-        <li class="card">
-          <img class="card__image" src="#" alt="" />
           <button
-            aria-label="Eliminar tarjeta"
-            class="card__delete-button"
+            class="profile__add-button"
+            type="button"
+            aria-label="Añadir nueva tarjeta"
+          ></button>
+        </section>
+        <section class="cards page__section">
+          <ul class="cards__list"></ul>
+        </section>
+      </main>
+      <footer class="footer page__section">
+        <p class="footer__copyright">© 2025 Around The U.S.</p>
+      </footer>
+    </div>
+
+    <!-- Popup Editar Perfil (corregido con ids/classes para profile) -->
+    <div class="popup" id="edit-popup">
+      <div class="popup__content">
+        <button class="popup__close" type="button" aria-label="Cerrar"></button>
+        <h3 class="popup__title">Editar perfil</h3>
+        <form class="popup__form" name="profile">
+          <input
+            id="name"
+            class="popup__input popup__input_type_name"
+            placeholder="Nombre"
+            required
+            minlength="2"
+            maxlength="40"
+            type="text"
+            name="name"
+          />
+          <span id="name-error" class="popup__error"></span>
+          <input
+            id="description"
+            class="popup__input popup__input_type_description"
+            placeholder="Acerca de mí"
+            required
+            minlength="2"
+            maxlength="200"
+            type="text"
+            name="description"
+          />
+          <span id="description-error" class="popup__error"></span>
+          <button class="popup__button" type="submit">Guardar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Popup Nuevo Lugar (corregido con class para focus) -->
+    <div class="popup" id="new-card-popup">
+      <div class="popup__content">
+        <button class="popup__close" type="button" aria-label="Cerrar"></button>
+        <h3 class="popup__title">Nuevo lugar</h3>
+        <form class="popup__form" name="new-place">
+          <input
+            id="card-name"
+            class="popup__input popup__input_type_card-name"
+            placeholder="Título"
+            required
+            minlength="2"
+            maxlength="30"
+            type="text"
+            name="name"
+          />
+          <span id="card-name-error" class="popup__error"></span>
+          <input
+            id="card-link"
+            class="popup__input popup__input_type_url"
+            placeholder="Enlace a la imagen"
+            required
+            type="url"
+            name="link"
+          />
+          <span id="card-link-error" class="popup__error"></span>
+          <button class="popup__button" type="submit">Guardar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Popup Imagen (sin cambios) -->
+    <div class="popup popup_type_image" id="image-popup">
+      <div class="popup__content popup__content_content_image">
+        <button class="popup__close" type="button" aria-label="Cerrar"></button>
+        <img alt="" class="popup__image" src="#" />
+        <p class="popup__caption"></p>
+      </div>
+    </div>
+
+    <!-- Template para Cards (sin cambios) -->
+    <template id="card-template">
+      <li class="card">
+        <img class="card__image" src="#" alt="" />
+        <button
+          aria-label="Eliminar tarjeta"
+          class="card__delete-button"
+          type="button"
+        ></button>
+        <div class="card__description">
+          <h2 class="card__title"></h2>
+          <button
+            aria-label="Botón Me gusta"
+            class="card__like-button"
             type="button"
           ></button>
-          <div class="card__description">
-            <h2 class="card__title"></h2>
-            <button
-              aria-label="Botón Me gusta"
-              class="card__like-button"
-              type="button"
-            ></button>
-          </div>
-        </li>
-      </template>
-    </body>
-    <script type="module" src="./scripts/index.js"></script>
-  </html>
-</DOCUMENT>
+        </div>
+      </li>
+    </template>
+  </body>
+  <script type="module" src="./scripts/index.js"></script>
+</html>
