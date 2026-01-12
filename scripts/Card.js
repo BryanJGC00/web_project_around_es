@@ -1,4 +1,3 @@
-// Card.js (reemplaza completo)
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._text = data.name;
