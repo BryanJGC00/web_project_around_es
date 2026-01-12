@@ -1,3 +1,4 @@
+// scripts/utils.js
 export const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -33,33 +34,3 @@ export const validationConfig = {
   inputErrorClass: "popup__input_invalid",
   errorClass: "popup__error_visible",
 };
-
-let currentOpenModal = null;
-
-function openModal(modal) {
-  modal.classList.add("popup_is-opened");
-  currentOpenModal = modal;
-  document.addEventListener("keydown", handleEscClose);
-  document.addEventListener("mousedown", handleOverlayClick);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("popup_is-opened");
-  currentOpenModal = null;
-  document.removeEventListener("keydown", handleEscClose);
-  document.removeEventListener("mousedown", handleOverlayClick);
-}
-
-function handleEscClose(evt) {
-  if (evt.key === "Escape" && currentOpenModal) {
-    closeModal(currentOpenModal);
-  }
-}
-
-function handleOverlayClick(evt) {
-  if (evt.target.classList.contains("popup")) {
-    closeModal(evt.target);
-  }
-}
-
-export { openModal, closeModal };
