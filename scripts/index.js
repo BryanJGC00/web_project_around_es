@@ -23,7 +23,7 @@ profilePopup.setEventListeners();
 
 const newCardPopup = new PopupWithForm("#new-card-popup", (data) => {
   const card = new Card(
-    { name: data["card-name"], link: data["card-link"] },
+    { name: data.name || "", link: data.link || "" },
     "#card-template",
     (cardData) => imagePopup.open(cardData)
   );
