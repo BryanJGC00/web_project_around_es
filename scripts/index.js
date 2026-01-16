@@ -5,66 +5,124 @@ import Section from "./Section.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import UserInfo from "./UserInfo.js";
-import { initialCards, validationConfig } from "./utils.js"; // Mantiene constantes
+import Api from "./Api.js"; // Importamos la clase Api
+import PopupWithConfirmation from "./PopupWithConfirmation.js"; // Nuevo import para popup confirm
+import { validationConfig } from "./utils.js";
+
+const api = new Api({
+  baseUrl: "https://around-api.es.tripleten-services.com/v1",
+  headers: {
+    authorization: "b92321ba-7015-4b3f-9bfc-df01004fd3b7",
+    "Content-Type": "application/json",
+  },
+});
 
 // Instancias
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
-  jobSelector: ".profile__description",
+  aboutSelector: ".profile__description", // Cambiado de jobSelector para consistencia
+  avatarSelector: ".profile__image", // Selector para img de avatar (coincide con HTML)
 });
 
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners();
 
 const profilePopup = new PopupWithForm("#edit-popup", (data) => {
-  userInfo.setUserInfo({ name: data.name, job: data.description });
+  api
+    .editUserInfo({ name: data.name, about: data.about }) // Cambiado: Usa 'about' directamente
+    .then((updatedUser) => {
+      userInfo.setUserInfo({
+        name: updatedUser.name,
+        about: updatedUser.about,
+        avatar: updatedUser.avatar,
+      });
+      profilePopup.close();
+    })
+    .catch((err) => console.error("Error al editar user info:", err));
 });
+
 profilePopup.setEventListeners();
 
-const newCardPopup = new PopupWithForm("#new-card-popup", (data) => {
-  const card = new Card(
-    { name: data.name || "", link: data.link || "" },
-    "#card-template",
-    (cardData) => imagePopup.open(cardData)
-  );
-  cardSection.addItem(card.generateCard());
+const avatarPopup = new PopupWithForm("#edit-avatar-popup", (data) => {
+  api
+    .updateAvatar(data.avatar)
+    .then((updatedUser) => {
+      userInfo.setUserInfo({
+        name: updatedUser.name,
+        about: updatedUser.about,
+        avatar: updatedUser.avatar,
+      });
+      avatarPopup.close();
+    })
+    .catch((err) => console.error("Error al actualizar avatar:", err));
 });
+
+avatarPopup.setEventListeners();
+
+let cardSection; // Declarar aquí para scope global (fix ReferenceError)
+
+const newCardPopup = new PopupWithForm("#new-card-popup", (data) => {
+  api
+    .addCard({ name: data.name, link: data.link })
+    .then((newCardData) => {
+      const card = new Card(
+        newCardData,
+        "#card-template",
+        (data) => imagePopup.open(data),
+        (cardId, cardElement) => confirmPopup.open(cardId, cardElement), // Callback para abrir confirm
+        userData._id,
+        api.likeCard.bind(api),
+        api.unlikeCard.bind(api)
+      );
+      cardSection.addItem(card.generateCard()); // Ahora accesible
+      newCardPopup.close();
+    })
+    .catch((err) => console.error("Error al agregar card:", err));
+});
+
 newCardPopup.setEventListeners();
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      const card = new Card(data, "#card-template", (cardData) =>
-        imagePopup.open(cardData)
-      );
-      return card.generateCard();
-    },
-  },
-  ".cards__list"
+// Nueva instancia para popup confirm delete
+const confirmPopup = new PopupWithConfirmation(
+  "#confirm-delete-popup",
+  (cardId, cardElement) => {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        cardElement.remove(); // Remover del DOM si success
+      })
+      .catch((err) => {
+        console.error("Error al eliminar card:", err);
+      });
+  }
 );
-cardSection.renderItems();
+confirmPopup.setEventListeners(); // Activa listeners para X/Esc/overlay
 
-// Validadores (por instancia de popup)
+// Validador para form de profile
 const profileValidator = new FormValidator(
   validationConfig,
   profilePopup._form
 );
 profileValidator.enableValidation();
 
+// Validador para form de new card
 const newCardValidator = new FormValidator(
   validationConfig,
   newCardPopup._form
 );
 newCardValidator.enableValidation();
 
-// Listeners para abrir
+// Nuevo validador para form de avatar
+const avatarValidator = new FormValidator(validationConfig, avatarPopup._form);
+avatarValidator.enableValidation();
+
+// Listeners
 document
   .querySelector(".profile__edit-button")
   .addEventListener("click", () => {
     const info = userInfo.getUserInfo();
     profilePopup._form.querySelector("#name").value = info.name;
-    profilePopup._form.querySelector("#description").value = info.job;
+    profilePopup._form.querySelector("#about").value = info.about; // Cambiado: Usa '#about' y 'info.about'
     profileValidator.resetValidation();
     profilePopup.open();
   });
@@ -73,3 +131,48 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
   newCardValidator.resetValidation();
   newCardPopup.open();
 });
+
+// Nuevo listener para botón de editar avatar
+document
+  .querySelector(".profile__edit-avatar-button")
+  .addEventListener("click", () => {
+    const info = userInfo.getUserInfo();
+    avatarPopup._form.querySelector("#avatar").value = info.avatar; // Precarga el avatar actual
+    avatarValidator.resetValidation();
+    avatarPopup.open();
+  });
+
+// Carga inicial
+let userData; // Para guardar globalmente
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cardsData]) => {
+    userData = user;
+    userInfo.setUserInfo({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+    });
+
+    cardSection = new Section( // Asignar aquí
+      {
+        items: cardsData,
+        renderer: (item) => {
+          const card = new Card(
+            item,
+            "#card-template",
+            (data) => imagePopup.open(data),
+            (cardId, cardElement) => confirmPopup.open(cardId, cardElement), // Callback para abrir confirm
+            user._id,
+            api.likeCard.bind(api),
+            api.unlikeCard.bind(api)
+          );
+          return card.generateCard();
+        },
+      },
+      ".cards__list"
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => {
+    console.error("Error al cargar datos iniciales:", err);
+  });

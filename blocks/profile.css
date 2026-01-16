@@ -1,3 +1,5 @@
+/* blocks/profile.css */
+
 .profile {
   font-family: "Inter", Arial, sans-serif;
   color: #fff;
@@ -29,83 +31,95 @@
 .profile__description {
   font-size: 18px;
   line-height: 22px;
+  font-weight: 400;
   grid-area: description;
   margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 373px;
-}
-
-.profile__image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  background-position: center;
-  margin-right: 29px;
-}
-
-.profile__add-button {
-  width: 150px;
-  height: 50px;
-  background: transparent url("../images/add-icon.svg") center no-repeat;
-  background-size: 22px;
-  border-radius: 2px;
-  border: 2px solid #fff;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.profile__add-button:hover {
-  opacity: 0.6;
-  transform: scale(1.05);
-  cursor: pointer;
 }
 
 .profile__edit-button {
-  width: 24px;
-  height: 24px;
   background: transparent url("../images/edit-icon.svg") center no-repeat;
   background-size: 10px 10px;
+  width: 24px;
+  height: 24px;
   border: 1px solid #fff;
   grid-area: button;
   align-self: center;
-  transition: opacity 0.3s ease, transform 0.3s ease;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  transition: opacity 0.2s;
 }
 
 .profile__edit-button:hover {
   opacity: 0.6;
-  transform: scale(1.05);
+}
+
+.profile__add-button {
+  background: transparent url("../images/add-icon.svg") center no-repeat;
+  background-size: 22px 22px;
+  width: 150px;
+  height: 50px;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  margin-left: auto;
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-@media screen and (max-width: 959px) {
-  .profile__info {
-    grid-template-columns: auto;
-  }
-
-  .profile__title {
-    font-size: 32px;
-    line-height: 38px;
-    max-width: 340px;
-  }
+.profile__add-button:hover {
+  opacity: 0.6;
 }
 
-@media screen and (max-width: 720px) {
+.profile__image {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-right: 32.5px;
+  object-fit: cover;
+}
+
+/* Contenedor del avatar: Relativo para posicionar el botón overlay */
+.profile__avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 32.5px; /* Mantener spacing original */
+}
+
+/* Botón de editar avatar: Overlay invisible por default, centrado */
+.profile__edit-avatar-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url("../images/edit-icon.svg") center no-repeat;
+  background-size: 26px 26px;
+  background-color: rgba(0, 0, 0, 0); /* Transparente por default */
+  border: none;
+  cursor: pointer;
+  opacity: 0; /* Invisible por default */
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+  display: flex; /* Para centrado perfecto del ícono */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover: Mostrar botón con fondo semi-transparente y ícono */
+.profile__avatar-container:hover .profile__edit-avatar-button {
+  opacity: 0.8;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Fondo negro semi-transparente al hover */
+}
+
+/* Media Queries */
+@media screen and (max-width: 544px) {
   .profile {
-    padding: 43px 0 21px;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile__info {
-    width: 100%;
-    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 29px 0 33px 0;
@@ -140,5 +154,10 @@
     width: 18px;
     height: 18px;
     background-size: 8px 8px;
+  }
+
+  /* Ajustes para avatar container en mobile */
+  .profile__avatar-container {
+    margin-right: 0;
   }
 }

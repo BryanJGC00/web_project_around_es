@@ -18,20 +18,30 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__avatar-container">
+            <!-- Nuevo contenedor para overlay -->
+            <img class="profile__image" src="" alt="Avatar" />
+            <!-- Cambiado: src vacío, se carga desde server -->
+            <button
+              class="profile__edit-avatar-button"
+              type="button"
+              aria-label="Editar avatar"
+            ></button>
+            <!-- Nuevo botón para editar avatar -->
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
+            <p class="profile__description"></p>
             <button
               class="profile__edit-button"
               type="button"
               aria-label="Editar perfil"
             ></button>
-            <p class="profile__description">Explorador</p>
           </div>
           <button
             class="profile__add-button"
             type="button"
-            aria-label="Añadir nueva tarjeta"
+            aria-label="Agregar card"
           ></button>
         </section>
         <section class="cards page__section">
@@ -39,71 +49,97 @@
         </section>
       </main>
       <footer class="footer page__section">
-        <p class="footer__copyright">© 2026 Around The U.S.</p>
+        <p class="footer__copyright">&copy; 2026 Around The U.S.</p>
       </footer>
     </div>
 
-    <!-- Popup Editar Perfil -->
-    <div class="popup" id="edit-popup">
+    <!-- Popup Edit Profile -->
+    <div class="popup popup_type_edit" id="edit-popup">
       <div class="popup__content">
         <button class="popup__close" type="button" aria-label="Cerrar"></button>
         <h3 class="popup__title">Editar perfil</h3>
-        <form class="popup__form" name="profile">
+        <form
+          class="popup__form"
+          name="edit-profile"
+          novalidate
+          autocomplete="off"
+        >
           <input
+            class="popup__input"
             id="name"
-            class="popup__input popup__input_type_name"
+            name="name"
             placeholder="Nombre"
             required
+            type="text"
             minlength="2"
             maxlength="40"
-            type="text"
-            name="name"
-            autocomplete="off"
+            autocomplete="name"
           />
           <span id="name-error" class="popup__error"></span>
           <input
-            id="description"
-            class="popup__input popup__input_type_description"
+            class="popup__input"
+            id="about"
+            name="about"
             placeholder="Acerca de mí"
             required
+            type="text"
             minlength="2"
             maxlength="200"
-            type="text"
-            name="description"
-            autocomplete="off"
+            autocomplete="work"
           />
-          <span id="description-error" class="popup__error"></span>
+          <span id="about-error" class="popup__error"></span>
           <button class="popup__button" type="submit">Guardar</button>
         </form>
       </div>
     </div>
 
-    <!-- Popup Nuevo Lugar -->
-    <div class="popup" id="new-card-popup">
+    <!-- Popup Edit Avatar -->
+    <div class="popup popup_type_edit_avatar" id="edit-avatar-popup">
+      <div class="popup__content">
+        <button class="popup__close" type="button" aria-label="Cerrar"></button>
+        <h3 class="popup__title">Cambiar foto de perfil</h3>
+        <form class="popup__form" name="edit-avatar" novalidate>
+          <input
+            class="popup__input"
+            id="avatar"
+            name="avatar"
+            placeholder="URL de la imagen"
+            required
+            type="url"
+            autocomplete="url"
+          />
+          <span id="avatar-error" class="popup__error"></span>
+          <button class="popup__button" type="submit">Guardar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Popup New Card -->
+    <div class="popup popup_type_new-card" id="new-card-popup">
       <div class="popup__content">
         <button class="popup__close" type="button" aria-label="Cerrar"></button>
         <h3 class="popup__title">Nuevo lugar</h3>
-        <form class="popup__form" name="new-place">
+        <form class="popup__form" name="new-place" novalidate>
           <input
+            class="popup__input"
             id="card-name"
-            class="popup__input popup__input_type_card-name"
+            name="name"
             placeholder="Título"
             required
+            type="text"
             minlength="2"
             maxlength="30"
-            type="text"
-            name="name"
-            autocomplete="off"
+            autocomplete="country-name"
           />
           <span id="card-name-error" class="popup__error"></span>
           <input
+            class="popup__input"
             id="card-link"
-            class="popup__input popup__input_type_url"
+            name="link"
             placeholder="Enlace a la imagen"
             required
             type="url"
-            name="link"
-            autocomplete="off"
+            autocomplete="url"
           />
           <span id="card-link-error" class="popup__error"></span>
           <button class="popup__button" type="submit">Guardar</button>
@@ -117,6 +153,15 @@
         <button class="popup__close" type="button" aria-label="Cerrar"></button>
         <img alt="" class="popup__image" src="#" />
         <p class="popup__caption"></p>
+      </div>
+    </div>
+
+    <!-- Nuevo Popup Confirmación Delete -->
+    <div class="popup popup_type_confirm" id="confirm-delete-popup">
+      <div class="popup__content">
+        <button class="popup__close" type="button" aria-label="Cerrar"></button>
+        <h2 class="popup__title">¿Estás seguro/a?</h2>
+        <button class="popup__confirm-button" type="button">Sí</button>
       </div>
     </div>
 

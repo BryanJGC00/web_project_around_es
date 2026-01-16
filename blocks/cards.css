@@ -13,7 +13,7 @@
   /* Para > max-width de section */
   .cards__list {
     grid-template-columns: repeat(3, 282px); /* Fuerza 3 columnas si cabe */
-    justify-content: space-between; /* Mejor distribución */
+    justify-content: center; /* Cambiado a center para centrado consistente (mejor distribución si fila incompleta) */
   }
 }
 

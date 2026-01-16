@@ -13,6 +13,6 @@ export default class Section {
   }
 
   addItem(element) {
-    this._container.prepend(element); // O append si prefieres al final
+    this._container.append(element); // Cambiado a append para renderizar en orden exacto del array del server (sin prepend)
   }
 }
