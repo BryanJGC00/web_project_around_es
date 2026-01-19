@@ -1,51 +1,47 @@
-# Proyecto Around - Sprint 11: Refactorización con POO y Clases ES6
+Around The U.S.
 
-## Descripción
+Descripción
 
-Este proyecto es una aplicación web simple para mostrar y gestionar tarjetas de lugares (cards), con funcionalidades como editar perfil, agregar nuevas tarjetas y ver imágenes en popups. En el Sprint 11, se refactorizó el código usando Programación Orientada a Objetos (POO) y clases ES6 para hacerla más modular y mantenible, sin alterar el funcionamiento base (e.g., las tarjetas se renderizan igual, los popups abren y cierran igual, y la validación de formularios sigue igual).
+"Around The U.S." es una aplicación web interactiva desarrollada como parte del Sprint 12 del curso de Web Development en TripleTen/Practicum. Permite a los usuarios crear y gestionar perfiles, agregar lugares con imágenes, dar likes, eliminar cards y editar información personal mediante una API backend. El proyecto utiliza programación orientada a objetos (POO) en JavaScript, validación de formularios, modales (popups) y una estructura de archivos modular con BEM para CSS.
 
-El proyecto usa HTML semántico, CSS responsivo (con BEM para naming) y JavaScript vanilla con clases ES6. No se usan librerías externas, alineado con los temas del bootcamp.
+Features Principales
 
-## Tecnologías Usadas
+Perfil de Usuario: Edición de nombre, descripción y avatar mediante API (PATCH).
+Cards/Lugares: Carga inicial desde API (GET), agregar nuevos lugares (POST), eliminar (DELETE), likes/unlikes (PUT/DELETE).
+Modales: Popups para edición, adición, confirmación de delete e imagen ampliada.
+Validación: Formularios validados en tiempo real con clases personalizadas.
+Responsividad: Diseño adaptable a diferentes resoluciones usando media queries.
+Accesibilidad: Atributos ARIA, alt en imágenes y focus states.
 
-- HTML5 (con semántica para accesibilidad).
-- CSS3 (Flexbox/Grid para layout, BEM para organización).
-- JavaScript ES6 (clases, herencia básica, métodos privados/públicos).
-- Validación de formularios con HTML5 y JS personalizado.
-- Manipulación del DOM para renderizado dinámico.
+El proyecto se enfoca en integración con API, manejo de errores asíncronos y optimización de código.
+Tecnologías Utilizadas
 
-## Estructura de Archivos
+Frontend: HTML5, CSS3 (con BEM y Flexbox/Grid para layout), JavaScript ES6+ (clases, modules, async/await no usado pero then/catch para promesas).
+Herramientas: Fetch API para requests, sin frameworks (JS puro).
+Estructura: Archivos en src/ con subdirectorios blocks/ (CSS), components/ (JS), pages/ (index.css/js), images/, vendor/ (normalize.css, fonts).
+Otros: .gitignore para ignorar node_modules (si aplica dependencias).
 
-La estructura sigue BEM plana para CSS y modularidad en JS:
+Instalación
 
-WEB_PROJECT_AROUND_ES/
-│
-├── blocks/ # CSS para bloques BEM (e.g., card.css, popup.css)
-├── images/ # Imágenes y SVGs (e.g., avatar.jpg, like-active.svg)
-├── pages/ # CSS principal (index.css)
-├── scripts/ # JavaScript modular con clases ES6
-│ ├── Card.js # Clase para generar y manejar tarjetas
-│ ├── FormValidator.js # Clase para validación de formularios
-│ ├── Popup.js # Clase base para popups (maneja open/close, ESC, overlay)
-│ ├── PopupWithForm.js # Subclase para popups con forms (herencia)
-│ ├── PopupWithImage.js # Subclase para popups de imágenes
-│ ├── UserInfo.js # Clase para manejar info de usuario (get/set)
-│ ├── Section.js # Clase para secciones (e.g., lista de cards)
-│ ├── index.js # Punto de entrada: Crea instancias y listeners minimalistas
-│ └── utils.js # Constantes compartidas (e.g., initialCards, validationConfig)
-├── vendor/ # Recursos de terceros (fonts.css, normalize.css, fuentes)
-├── .prettierignore # Configuración para Prettier
-├── index.html # HTML principal
-└── README.md # Este archivo
+Clona el repositorio:textgit clone https://github.com/BryanJGC00/web_project_around_es.git
+Abre src/index.html en un navegador moderno (Chrome, Firefox, etc.). No se requieren servidores o dependencias adicionales, ya que es un proyecto estático con JS client-side.
 
-## Cambios en el Sprint 11
+Nota: El proyecto interactúa con una API externa, por lo que requiere conexión a internet. Usa el token de autorización proporcionado en Api.js (reemplaza si es necesario).
+Uso
 
-- Refactorización a POO: Transformadas funciones procedurales en clases ES6 (e.g., Card ahora es clase con constructor y métodos privados).
-- Herencia: PopupWithForm y PopupWithImage heredan de Popup para reutilización.
-- Encapsulación: Lógica de validación, popups y usuario encapsulada en clases separadas (métodos privados con \_prefijo).
-- index.js minimalista: Solo crea instancias y pasa callbacks, cumpliendo con separación de responsabilidades.
-- No se alteró el funcionamiento base: La app se comporta igual (e.g., likes, deletes, submits), solo es más escalable.
+Perfil: Haz clic en el lápiz para editar nombre/descripción, o en el avatar para cambiar foto.
+Agregar Lugar: Botón "+" para abrir modal y agregar card con título e imagen URL.
+Likes/Delete: Interactúa con hearts y botes de basura en cards (confirmación para delete).
+Imagen Ampliada: Clic en imagen de card para abrir popup centrado.
 
-Estos cambios cumplen con el criterio del sprint de "Aplicar POO y clases ES6 para estructurar el código de manera modular, manteniendo la separación de responsabilidades".
+Verifica la consola del navegador para logs de errores en requests API.
+Enlaces
 
-Autor: Bryan J. García Chávez
+Repositorio GitHub: https://github.com/BryanJGC00/web_project_around_es.git.
+
+Autor
+
+Bryan Joseph García Chávez (@bjgchavez)
+Desarrollado en Enero 2026 como proyecto final del Sprint 12.
+
+Si encuentras issues o sugerencias, abre un issue en el repo. ¡Gracias!
