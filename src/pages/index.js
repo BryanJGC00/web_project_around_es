@@ -1,13 +1,13 @@
 // scripts/index.js
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithForm from "./PopupWithForm.js";
-import PopupWithImage from "./PopupWithImage.js";
-import UserInfo from "./UserInfo.js";
-import Api from "./Api.js"; // Importamos la clase Api
-import PopupWithConfirmation from "./PopupWithConfirmation.js"; // Nuevo import para popup confirm
-import { validationConfig } from "./utils.js";
+import Card from "../components/Card.js"; // Cambio: Ajuste relativo desde pages/ a scripts/
+import FormValidator from "../components/FormValidator.js"; // Cambio
+import Section from "../components/Section.js"; // Cambio
+import PopupWithForm from "../components/PopupWithForm.js"; // Cambio
+import PopupWithImage from "../components/PopupWithImage.js"; // Cambio
+import UserInfo from "../components/UserInfo.js"; // Cambio
+import Api from "../components/Api.js"; // Cambio: Importamos la clase Api
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js"; // Cambio: Nuevo import para popup confirm
+import { validationConfig } from "../components/utils.js"; // Cambio
 
 const api = new Api({
   baseUrl: "https://around-api.es.tripleten-services.com/v1",
@@ -72,7 +72,7 @@ const newCardPopup = new PopupWithForm("#new-card-popup", (data) => {
         (cardId, cardElement) => confirmPopup.open(cardId, cardElement), // Callback para abrir confirm
         userData._id,
         api.likeCard.bind(api),
-        api.unlikeCard.bind(api)
+        api.unlikeCard.bind(api),
       );
       cardSection.addItem(card.generateCard()); // Ahora accesible
       newCardPopup.close();
@@ -94,21 +94,21 @@ const confirmPopup = new PopupWithConfirmation(
       .catch((err) => {
         console.error("Error al eliminar card:", err);
       });
-  }
+  },
 );
 confirmPopup.setEventListeners(); // Activa listeners para X/Esc/overlay
 
 // Validador para form de profile
 const profileValidator = new FormValidator(
   validationConfig,
-  profilePopup._form
+  profilePopup._form,
 );
 profileValidator.enableValidation();
 
 // Validador para form de new card
 const newCardValidator = new FormValidator(
   validationConfig,
-  newCardPopup._form
+  newCardPopup._form,
 );
 newCardValidator.enableValidation();
 
@@ -164,12 +164,12 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             (cardId, cardElement) => confirmPopup.open(cardId, cardElement), // Callback para abrir confirm
             user._id,
             api.likeCard.bind(api),
-            api.unlikeCard.bind(api)
+            api.unlikeCard.bind(api),
           );
           return card.generateCard();
         },
       },
-      ".cards__list"
+      ".cards__list",
     );
     cardSection.renderItems();
   })
