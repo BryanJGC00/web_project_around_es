@@ -10,7 +10,7 @@
   height: 100vh;
   display: none;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Centrado en pantalla */
   z-index: 1000;
   pointer-events: none;
 }
@@ -73,9 +73,9 @@
 }
 
 .popup__button {
-  width: 100%; /* Ya existente, pero confirmado para referencia */
+  width: 100%;
   height: 50px;
-  background: #000;
+  background-color: #000;
   color: #fff;
   font-size: 18px;
   line-height: 22px;
@@ -89,79 +89,57 @@
   opacity: 0.8;
 }
 
-.popup__button_disabled {
-  background: #fff;
-  color: #000;
-  opacity: 0.2;
-  border: 1px solid #000;
-  cursor: not-allowed;
-}
-
-.popup__error {
-  color: #f00;
-  font-size: 12px;
-  line-height: 15px;
-  display: none;
-  margin-top: 5px;
-}
-
-.popup__error_visible {
-  display: block;
-}
-
-.popup__input_invalid {
-  border-bottom: 1px solid #f00;
-}
-
-.popup__content_content_image {
-  padding: 0;
-  background: transparent;
-  max-width: 90vw;
-  max-height: 90vh;
-  box-shadow: none;
-  margin: auto;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.popup__image {
-  max-width: 100%;
-  max-height: 75vh;
-}
-
-.popup__caption {
-  font-size: 12px;
-  line-height: 15px;
-  color: #fff;
-  margin-top: 10px;
-}
-
-/* Nuevo/Actualizado: Estilos para botón de confirmación, igualando a .popup__button */
 .popup__confirm-button {
-  width: 100%; /* Cambio clave: Igual ancho full-width */
-  height: 50px; /* Igual height */
-  background: #000; /* Igual background */
-  color: #fff; /* Igual color */
-  font-size: 18px; /* Igual font-size */
-  line-height: 22px; /* Igual line-height */
+  width: 100%;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  font-size: 18px;
+  line-height: 22px;
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  margin-top: 48px; /* Igual margin-top */
+  margin-top: 48px;
 }
 
 .popup__confirm-button:hover {
-  opacity: 0.8; /* Igual hover */
+  opacity: 0.8;
 }
 
-/* Media queries (ajustes responsivos, manteniendo consistencia) */
+/* Estilos específicos para el contenedor de imagen: Contenedor blanco fijo, adaptable a diferentes tamaños */
+.popup__content_content_image {
+  background: #ffffff; /* Fondo blanco como contenedor principal */
+  border-radius: 10px;
+  padding: 0; /* Sin padding para maximizar espacio para imagen */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado horizontal */
+  justify-content: center; /* Centrado vertical */
+  max-width: 80vw; /* Límite responsivo: 80% del viewport width */
+  max-height: 80vh; /* Límite responsivo: 80% del viewport height para diferentes tamaños */
+  width: auto; /* Se adapta al contenido */
+  height: auto; /* Se adapta al contenido */
+  position: relative;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden; /* Evita desbordes si la imagen es muy grande */
+}
+
+.popup__image {
+  max-width: 100%; /* Adaptable a diferentes medidas: No excede contenedor */
+  max-height: 100%; /* Adaptable a diferentes medidas: No excede contenedor */
+  width: auto; /* Mantiene proporciones originales */
+  height: auto; /* Mantiene proporciones originales */
+  object-fit: contain; /* Adapta sin distorsión, centrado si no llena el espacio */
+  border-radius: 10px; /* Bordes redondeados consistentes */
+}
+
+/* Media queries para responsividad en mobile */
 @media screen and (max-width: 767px) {
   .popup__content {
     padding: 25px 22px;
+    width: 100%;
     max-width: 282px;
+    margin-top: 8px;
   }
 
   .popup__title {
@@ -172,6 +150,8 @@
 
   .popup__input {
     margin-bottom: 30px;
+    padding: 16px 0 3px 0;
+    font-size: 13px;
   }
 
   .popup__button {
@@ -182,7 +162,6 @@
   }
 
   .popup__confirm-button {
-    /* Ajuste responsivo para confirm-button */
     font-size: 14px;
     line-height: 17px;
     margin-top: 46px;
@@ -222,8 +201,8 @@
   }
 
   .popup__content_content_image {
-    max-width: 90vw;
-    max-height: 90vw;
+    max-width: 90vw; /* Ajuste mobile: Más ancho para pantallas pequeñas */
+    max-height: 90vh; /* Ajuste mobile: Más alto para adaptabilidad */
     padding: 0;
   }
 }
