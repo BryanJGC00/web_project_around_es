@@ -9,7 +9,7 @@
 
 .card__title {
   max-width: 220px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 900;
   line-height: 29px;
   text-overflow: ellipsis;
@@ -34,7 +34,7 @@
 
 .card__image:hover {
   cursor: pointer;
-  opacity: 0.9; /* Opcional para feedback visual */
+  opacity: 0.8; /* Opcional para feedback visual */
 }
 
 .card__like-button {

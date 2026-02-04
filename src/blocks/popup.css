@@ -17,17 +17,20 @@
 
 .popup_is-opened {
   display: flex;
-  pointer-events: auto;
 }
 
 .popup__content {
   background: #ffffff;
-  padding: 34px 36px 37px;
+  padding: 34px 36px;
   border-radius: 10px;
-  max-width: 430px;
+  max-width: 600px;
+  max-height: 400px;
+  min-width: 280px;
+  min-height: 120px;
   width: 100%;
+  height: auto;
   position: relative;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
 }
 
 .popup__close {
@@ -48,8 +51,8 @@
 
 .popup__title {
   font-size: 24px;
-  line-height: 29px;
-  margin-bottom: 54px;
+  line-height: 30px;
+  margin-bottom: 24px;
   font-weight: 900;
   color: #000;
 }
@@ -109,7 +112,7 @@
 /* Estilos específicos para el contenedor de imagen: Contenedor blanco fijo, adaptable a diferentes tamaños */
 .popup__content_content_image {
   background: #ffffff; /* Fondo blanco como contenedor principal */
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 0; /* Sin padding para maximizar espacio para imagen */
   display: flex;
   flex-direction: column;
@@ -120,17 +123,29 @@
   width: auto; /* Se adapta al contenido */
   height: auto; /* Se adapta al contenido */
   position: relative;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 0px 0.13rem #ffffff;
   overflow: hidden; /* Evita desbordes si la imagen es muy grande */
 }
 
 .popup__image {
   max-width: 100%; /* Adaptable a diferentes medidas: No excede contenedor */
   max-height: 100%; /* Adaptable a diferentes medidas: No excede contenedor */
-  width: auto; /* Mantiene proporciones originales */
-  height: auto; /* Mantiene proporciones originales */
-  object-fit: contain; /* Adapta sin distorsión, centrado si no llena el espacio */
-  border-radius: 10px; /* Bordes redondeados consistentes */
+  min-width: 100%; /* Mantiene proporciones originales */
+  min-height: 100%; /* Mantiene proporciones originales */
+  width: 650px; /* Mantiene proporciones originales */
+  height: 850px; /* Mantiene proporciones originales */
+  display: block;
+  object-fit: cover; /* Adapta sin distorsión, centrado si no llena el espacio */
+  padding: auto;
+}
+
+.popup__caption {
+  font-size: 22px;
+  line-height: 15px;
+  color: #000;
+  margin: 25px auto 30px auto;
+  text-align: center;
+  max-width: 75vw;
 }
 
 /* Media queries para responsividad en mobile */
